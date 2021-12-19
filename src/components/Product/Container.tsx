@@ -24,9 +24,19 @@ const useCardStyles = makeStyles({
 	},
 });
 
+const useContainerStyles = makeStyles({
+	title: {
+		'&:hover': {
+      textDecoration: 'underline',
+    },
+    cursor: 'pointer',
+	},
+});
+
 export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
   ({ item, ...props }) => {
     const cardStyle = useCardStyles();
+    const containerStyles = useContainerStyles();
 
     const options = item.options.map((option) => {
       if (typeof option.color === "object") {
@@ -52,9 +62,15 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
       return price.toLocaleString();
     };
 
+    const title = (
+      <div className={containerStyles.title}>
+        {item.name}
+      </div>
+    )
+
     return (
       <Card classes={cardStyle}>
-        <CardHeader title={item.name} subheader={item.brand} />
+        <CardHeader title={title} subheader={item.brand} />
         <CardContent>
           <Grid container direction="column">
             <Grid item>
