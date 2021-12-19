@@ -1,3 +1,4 @@
+import { OptionsColor } from "../enum/OptionsColor";
 import { ProductOptionType } from "../enum/ProductOptionType";
 
 export interface Product {
@@ -8,7 +9,7 @@ export interface Product {
   available: boolean;
   weight: number;
   options: Array<{
-    color: string | Array<string>;
+    color: keyof OptionsColor | Array<keyof OptionsColor>;
     [ProductOptionType.Power]?: Array<number>;
     [ProductOptionType.Storage]?: Array<string>;
     quantity: number;
