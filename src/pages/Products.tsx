@@ -1,6 +1,7 @@
-import { Container, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { ProductContainer } from "../components/Product/Container";
 import { useProducts } from "../hooks/useProducts";
+import { MainLayout } from "../layout/Main";
 
 export const ProductsPage = () => {
   const products = useProducts();
@@ -8,7 +9,7 @@ export const ProductsPage = () => {
   console.log("product : ", products);
 
   return (
-    <Container>
+    <MainLayout>
       <h1>Products</h1>
       <Grid container spacing={2}>
         {products.map((product) => (
@@ -24,6 +25,6 @@ export const ProductsPage = () => {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </MainLayout>
   );
 };
