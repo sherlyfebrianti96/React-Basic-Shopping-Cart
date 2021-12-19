@@ -1,9 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ProductsPage } from './Pages/Products';
+import { ProductsPage } from './pages/Products';
 
 function App() {
   const theme = createTheme();
