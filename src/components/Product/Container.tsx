@@ -84,6 +84,18 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
             <Grid item>
               <Typography>{options}</Typography>
             </Grid>
+            {!item.available && (
+              <Grid item>
+                <Typography variant="body2" sx={{ opacity: 0.5 }}>
+                  <Grid container spacing={1}>
+                    <Grid item>Product is unavailable</Grid>
+                    <Grid item>
+                      <Info fontSize="small" />
+                    </Grid>
+                  </Grid>
+                </Typography>
+              </Grid>
+            )}
           </Grid>
         </CardContent>
         <CardActions disableSpacing>
