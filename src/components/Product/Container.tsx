@@ -9,6 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { Product } from "../../interface/Product";
 import { ProductOptions } from "./Options";
@@ -17,8 +18,16 @@ export interface ProductContainerProps {
   item: Product;
 }
 
+const useCardStyles = makeStyles({
+	root: {
+		boxShadow: '0px 2px 3px -1px rgb(0 0 0 / 20%), 0px 1px 3px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+	},
+});
+
 export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
   ({ item, ...props }) => {
+    const cardStyle = useCardStyles();
+
     const options = item.options.map((option) => {
       if (typeof option.color === "object") {
         return option.color.map((optionColor: keyof OptionsColor) => (
@@ -44,7 +53,7 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
     };
 
     return (
-      <Card>
+      <Card classes={cardStyle}>
         <CardHeader title={item.name} subheader={item.brand} />
         <CardContent>
           <Grid container direction="column">
