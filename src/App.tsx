@@ -12,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/products/:id/:color" element={<ProductDetailPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/products" element={<ProductsPage />} />
           {/* Default Page */}
           <Route path="/" element={<Navigate to="/products" />} />

@@ -1,5 +1,14 @@
-import { Grid, Toolbar, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { ProductOptionType } from "../../enum/ProductOptionType";
@@ -49,6 +58,11 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
         navigate(`/products/${item.id}/${item.options[0].color.toString()}`);
       }
     }, [item.id, item.options, navigate, props.color]);
+
+    const onColorChange = (evt: SelectChangeEvent) => {
+      const color = evt.target.value;
+      navigate(`/products/${item.id}/${color}`);
+    };
 
     const options = item.options.map((option) => {
       if (typeof option.color === "object") {
@@ -140,6 +154,27 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
               <Grid item>{activeOption.quantity} pcs</Grid>
             </Grid>
           </Grid>
+        </Grid>
+        <Grid item>
+          <FormControl>
+            <InputLabel id="select-color-label">Color</InputLabel>
+            <Select
+              labelId="select-color-label"
+              id="select-color"
+              value={activeOption.color.toString()}
+              label="Color"
+              onChange={onColorChange}
+            >
+              {item.options.map((option) => (
+                <MenuItem
+                  key={`color-selection-${option.color.toString()}`}
+                  value={option.color.toString()}
+                >
+                  {option.color.toString().toUpperCase()}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
       </>
     );
