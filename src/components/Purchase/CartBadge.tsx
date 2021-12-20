@@ -10,7 +10,6 @@ export interface PurchaseCartBadgeProps {}
 const useBadgeStyles = makeStyles((theme: Theme) => ({
   badge: {
     fontSize: theme.spacing(2),
-    backgroundColor: "white",
     color: "white",
     border: `1px solid ${theme.palette.warning.main}`,
   },
