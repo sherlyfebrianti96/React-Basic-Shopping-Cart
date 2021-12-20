@@ -16,13 +16,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { ProductOptionType } from "../../enum/ProductOptionType";
+import { usePurchase } from "../../hooks/usePurchase";
 import { Product } from "../../interface/Product";
 import { ProductOption } from "../../interface/ProductOption";
+import { PurchaseItem } from "../../interface/PurchaseItem";
 import { ProductOptions } from "./Options";
 
 export interface ProductInformationProps {
   item: Product;
-  color?: string;
+  color: string;
 }
 
 const useSectionStyles = makeStyles((theme: Theme) => ({
@@ -33,21 +35,20 @@ const useSectionStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const ProductInformation: React.FunctionComponent<ProductInformationProps> =
-  ({ item, ...props }) => {
-		const sectionStyles = useSectionStyles();
-
-    const [activeOption, setActiveOption] = useState<ProductOption>(
-      item.options[0]
-    );
+  ({ item, color, ...props }) => {
+    const sectionStyles = useSectionStyles();
+		
+    const [activeOption, setActiveOption] = useState<ProductOption>(item.options[0]);
 
     const navigate = useNavigate();
+    const purchase = usePurchase();
 
     useEffect(() => {
       /* Set Default Color */
-      if (!props.color) {
+      if (!color) {
         navigate(`/products/${item.id}/${item.options[0].color.toString()}`);
       }
-    }, [item.id, item.options, navigate, props.color]);
+    }, [item.id, item.options, navigate, color]);
 
     useEffect(() => {
       /* Check the User Selected Color with the available Color */
@@ -55,9 +56,9 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
       let option = item.options[0];
       item.options.forEach((itemOption) => {
         if (typeof itemOption.color === "object") {
-          colorIsProvided = itemOption.color[0] === props.color;
+          colorIsProvided = itemOption.color[0] === color;
         } else {
-          colorIsProvided = itemOption.color === props.color;
+          colorIsProvided = itemOption.color === color;
         }
 
         if (colorIsProvided) {
@@ -65,16 +66,32 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
         }
       });
 
-      if (colorIsProvided) {
-        setActiveOption(option);
-      } else {
+			setActiveOption(option);
+
+      if (!colorIsProvided) {
         navigate(`/products/${item.id}/${item.options[0].color.toString()}`);
       }
-    }, [item.id, item.options, navigate, props.color]);
+    }, [item.id, item.options, navigate, color]);
 
     const onColorChange = (evt: SelectChangeEvent) => {
       const color = evt.target.value;
       navigate(`/products/${item.id}/${color}`);
+    };
+
+    const onAddToCart = () => {
+      const purchaseItem: PurchaseItem = {
+        id: item.id,
+        name: item.name,
+        brand: item.brand,
+        price: item.price,
+        available: item.available,
+        weight: item.weight,
+        color: activeOption.color,
+        [ProductOptionType.Power]: activeOption.power,
+        [ProductOptionType.Storage]: activeOption.storage,
+        quantity: 1,
+      };
+      purchase.add(purchaseItem);
     };
 
     const options = item.options.map((option) => {
@@ -119,12 +136,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
           </Grid>
         </Grid>
 
-        <Grid
-          container
-          direction="column"
-          spacing={1}
-          classes={sectionStyles}
-        >
+        <Grid container direction="column" spacing={1} classes={sectionStyles}>
           <Grid item>
             <Grid container spacing={2}>
               <Grid item>Available Color :</Grid>
@@ -176,7 +188,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
               <Select
                 labelId="select-color-label"
                 id="select-color"
-                value={activeOption.color.toString()}
+                value={color}
                 label="Color"
                 onChange={onColorChange}
               >
@@ -198,6 +210,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
               variant="contained"
               size="large"
               startIcon={<AddShoppingCart />}
+              onClick={onAddToCart}
             >
               Add to cart
             </Button>

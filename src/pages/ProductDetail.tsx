@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ProductInformation } from "../components/Product/Information";
 import { useProducts } from "../hooks/useProducts";
 import { MainLayout } from "../layout/Main";
+import { useEffect } from "react";
 
 const useNavigationStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -25,6 +26,14 @@ export const ProductDetailPage = () => {
   console.log("id : ", id);
   console.log("product : ", product);
 
+  useEffect(() => {
+    if (!color) {
+      navigate(
+        `/products/${product?.id}/${product?.options[0].color.toString()}`
+      );
+    }
+  }, [color, navigate, product?.id, product?.options]);
+
   const onClickFindAnotherProduct = () => {
     navigate("/products");
   };
@@ -37,7 +46,7 @@ export const ProductDetailPage = () => {
         </Button>
       </Typography>
       {product ? (
-        <ProductInformation item={product} color={color} />
+        <ProductInformation item={product} color={color as string} />
       ) : (
         <h3>Product not found.</h3>
       )}
