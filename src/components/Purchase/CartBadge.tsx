@@ -1,9 +1,7 @@
 import { ShoppingCart } from "@mui/icons-material";
 import { Badge, Theme, Toolbar } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useEffect, useRef } from "react";
 import { usePurchase } from "../../hooks/usePurchase";
-import { PurchaseItem } from "../../interface/PurchaseItem";
 
 export interface PurchaseCartBadgeProps {}
 

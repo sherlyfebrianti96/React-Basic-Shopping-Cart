@@ -1,5 +1,5 @@
 import { FiberManualRecord } from "@mui/icons-material";
-import { Toolbar, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { OptionsColor } from "../../enum/OptionsColor";
 
 export interface ProductOptionsProps {
@@ -17,5 +17,3 @@ export const ProductOptions: React.FunctionComponent<ProductOptionsProps> = ({
     </Tooltip>
   );
 };
-
-export default Toolbar;

@@ -11,12 +11,14 @@
     "@mui/styled-engine-sc": "^5.1.0",
     "@mui/styles": "^5.2.3",
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.14",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "esm": "^3.2.25",
+    "jest-watch-typeahead": "^1.0.0",
+    "jest-watcher": "^27.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.1",
@@ -48,5 +50,32 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^12.1.2"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(ky))"
+    ],
+    "collectCoverageFrom": [
+      "./**/*.{js,jsx,ts,tsx}",
+      "!./**/*.test.{js,jsx,ts,tsx}",
+      "!./**/*.stories.{js,jsx,ts,tsx}"
+    ],
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 95,
+        "functions": 100,
+        "lines": 70,
+        "statements": -2
+      }
+    }
   }
 }
