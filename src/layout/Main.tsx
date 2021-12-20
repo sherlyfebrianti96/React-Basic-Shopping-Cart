@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { ReactElement } from "react";
 import { PurchaseCartBadge } from "../components/Purchase/CartBadge";
+import { useNavigate } from "react-router-dom";
 
 export interface MainLayoutProps {
   children?: ReactElement | Array<ReactElement>;
@@ -15,6 +16,12 @@ export interface MainLayoutProps {
 export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
   ...props
 }) => {
+  const navigate = useNavigate();
+
+  const onClickShoppingCart = () => {
+		navigate('/shopping-cart');
+  };
+
   return (
     <>
       <AppBar>
@@ -27,7 +34,7 @@ export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            // onClick={handleMenu}
+            onClick={onClickShoppingCart}
             color="inherit"
           >
             <PurchaseCartBadge />

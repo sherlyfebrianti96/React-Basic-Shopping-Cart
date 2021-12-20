@@ -13,7 +13,7 @@ export const usePurchase = () => {
       const foundExistingindex = purchaseList.findIndex(
         (purchase) =>
           /* Current Purchase item is depend on the Item ID and Item Color */
-          purchase.id === item.id && purchase.color === item.color
+          purchase.id === item.id && purchase.color.toString() === item.color.toString()
       );
       if (foundExistingindex >= 0) {
         /* Update existing items */
@@ -47,7 +47,7 @@ export const usePurchase = () => {
     const purchaseList: Array<PurchaseItem> = getAll();
     return purchaseList.find(
       (purchaseItem) =>
-        purchaseItem.id === id && purchaseItem.color.toString() === color
+        purchaseItem.id === id && purchaseItem.color.toString() === color.toString()
     );
   };
 

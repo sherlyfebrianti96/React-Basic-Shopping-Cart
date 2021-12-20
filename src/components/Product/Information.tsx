@@ -1,6 +1,11 @@
-import { Add, AddShoppingCart, Delete, Remove } from "@mui/icons-material";
 import {
-  Box,
+  Add,
+  AddShoppingCart,
+  Delete,
+  Info,
+  Remove,
+} from "@mui/icons-material";
+import {
   Button,
   FormControl,
   Grid,
@@ -61,13 +66,12 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
       let colorIsProvided = false;
       let option = item.options[0];
       item.options.forEach((itemOption) => {
-        if (typeof itemOption.color === "object") {
-          colorIsProvided = itemOption.color[0] === color;
-        } else {
-          colorIsProvided = itemOption.color === color;
-        }
-
-        if (colorIsProvided) {
+        const colorComparator =
+          typeof itemOption.color === "object"
+            ? itemOption.color[0]
+            : itemOption.color;
+        if (colorComparator === color) {
+          colorIsProvided = true;
           option = itemOption;
         }
       });
@@ -100,14 +104,17 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
       purchase.add(purchaseItem);
     };
 
-		const getQuantityFromStock = (newQuantity: number) => {
-			return Math.min(newQuantity, activeOption.quantity);
-		}
+    const getQuantityFromStock = (newQuantity: number) => {
+      return Math.min(newQuantity, activeOption.quantity);
+    };
 
     const onChangeQuantity = (evt: React.ChangeEvent<HTMLInputElement>) => {
       const quantity = evt.target.value;
       if (productInPurchase) {
-        purchase.add({ ...productInPurchase, quantity: getQuantityFromStock(parseInt(quantity)) });
+        purchase.add({
+          ...productInPurchase,
+          quantity: getQuantityFromStock(parseInt(quantity)),
+        });
       }
     };
 
@@ -296,7 +303,11 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
             </Grid>
             <Grid container classes={sectionStyles}>
               <Grid item>
-                <Button variant="outlined" color="warning" onClick={onRemoveFromCart}>
+                <Button
+                  variant="outlined"
+                  color="warning"
+                  onClick={onRemoveFromCart}
+                >
                   <Delete />
                   Remove from cart
                 </Button>
@@ -305,16 +316,29 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
           </>
         ) : (
           <Grid container classes={sectionStyles}>
-            <Grid item>
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<AddShoppingCart />}
-                onClick={onAddToCart}
-              >
-                Add to cart
-              </Button>
-            </Grid>
+            {item.available ? (
+              <Grid item>
+                <Button
+                  variant="contained"
+                  size="large"
+                  startIcon={<AddShoppingCart />}
+                  onClick={onAddToCart}
+                >
+                  Add to cart
+                </Button>
+              </Grid>
+            ) : (
+              <Grid item>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="warning"
+                  endIcon={<Info />}
+                >
+                  Product is unavailable
+                </Button>
+              </Grid>
+            )}
           </Grid>
         )}
       </>
