@@ -1,12 +1,16 @@
-import { AddShoppingCart } from "@mui/icons-material";
+import { Add, AddShoppingCart, Delete, Remove } from "@mui/icons-material";
 import {
+  Box,
   Button,
   FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  TextField,
   Theme,
   Toolbar,
   Typography,
@@ -37,8 +41,10 @@ const useSectionStyles = makeStyles((theme: Theme) => ({
 export const ProductInformation: React.FunctionComponent<ProductInformationProps> =
   ({ item, color, ...props }) => {
     const sectionStyles = useSectionStyles();
-		
-    const [activeOption, setActiveOption] = useState<ProductOption>(item.options[0]);
+
+    const [activeOption, setActiveOption] = useState<ProductOption>(
+      item.options[0]
+    );
 
     const navigate = useNavigate();
     const purchase = usePurchase();
@@ -66,7 +72,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
         }
       });
 
-			setActiveOption(option);
+      setActiveOption(option);
 
       if (!colorIsProvided) {
         navigate(`/products/${item.id}/${item.options[0].color.toString()}`);
@@ -94,6 +100,44 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
       purchase.add(purchaseItem);
     };
 
+		const getQuantityFromStock = (newQuantity: number) => {
+			return Math.min(newQuantity, activeOption.quantity);
+		}
+
+    const onChangeQuantity = (evt: React.ChangeEvent<HTMLInputElement>) => {
+      const quantity = evt.target.value;
+      if (productInPurchase) {
+        purchase.add({ ...productInPurchase, quantity: getQuantityFromStock(parseInt(quantity)) });
+      }
+    };
+
+    const onIncreaseQuantity = () => {
+      if (productInPurchase) {
+        purchase.add({
+          ...productInPurchase,
+          quantity: getQuantityFromStock(productInPurchase.quantity + 1),
+        });
+      }
+    };
+
+    const onDecreaseQuantity = () => {
+      if (productInPurchase) {
+        purchase.add({
+          ...productInPurchase,
+          quantity: productInPurchase.quantity - 1,
+        });
+      }
+    };
+
+    const onRemoveFromCart = () => {
+      if (productInPurchase) {
+        purchase.add({
+          ...productInPurchase,
+          quantity: 0,
+        });
+      }
+    };
+
     const options = item.options.map((option) => {
       if (typeof option.color === "object") {
         return option.color.map((optionColor: keyof OptionsColor) => (
@@ -117,6 +161,11 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
       }
       return price.toLocaleString();
     };
+
+    const productInPurchase = purchase.findPurchase(
+      item.id,
+      activeOption.color.toString()
+    );
 
     return (
       <>
@@ -204,18 +253,70 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container classes={sectionStyles}>
-          <Grid item>
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<AddShoppingCart />}
-              onClick={onAddToCart}
-            >
-              Add to cart
-            </Button>
+        {productInPurchase ? (
+          <>
+            <Grid container classes={sectionStyles}>
+              <Grid item>
+                <TextField
+                  id="input-quantity"
+                  label="Quantity"
+                  value={productInPurchase.quantity}
+                  onChange={onChangeQuantity}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IconButton
+                          size="large"
+                          aria-label="Reduce Purchase Quantity"
+                          aria-controls="quantity-reduce"
+                          color="inherit"
+                          onClick={onDecreaseQuantity}
+                        >
+                          <Remove />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          size="large"
+                          aria-label="Increase Purchase Quantity"
+                          aria-controls="quantity-increase"
+                          color="inherit"
+                          onClick={onIncreaseQuantity}
+                        >
+                          <Add />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+            </Grid>
+            <Grid container classes={sectionStyles}>
+              <Grid item>
+                <Button variant="outlined" color="warning" onClick={onRemoveFromCart}>
+                  <Delete />
+                  Remove from cart
+                </Button>
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <Grid container classes={sectionStyles}>
+            <Grid item>
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<AddShoppingCart />}
+                onClick={onAddToCart}
+              >
+                Add to cart
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </>
     );
   };

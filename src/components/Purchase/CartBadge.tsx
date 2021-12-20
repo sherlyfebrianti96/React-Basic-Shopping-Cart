@@ -1,7 +1,7 @@
 import { ShoppingCart } from "@mui/icons-material";
 import { Badge, Theme, Toolbar } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePurchase } from "../../hooks/usePurchase";
 import { PurchaseItem } from "../../interface/PurchaseItem";
 
@@ -22,15 +22,15 @@ export const PurchaseCartBadge: React.FunctionComponent<PurchaseCartBadgeProps> 
 
     const purchase = usePurchase();
 
-    const [purchaseList, setPurchaseList] = useState<Array<PurchaseItem>>([]);
+		const purchaseList = useRef<Array<PurchaseItem>>();
 
-    useEffect(() => {
-      setPurchaseList(purchase.getAll());
-    }, [purchase]);
+		useEffect(() => {
+			purchaseList.current = purchase.getAll();
+		}, [purchase]);
 
     return (
       <Badge
-        badgeContent={purchaseList.length}
+        badgeContent={purchaseList.current?.length}
         color="warning"
         classes={badgeStyles}
       >

@@ -23,8 +23,6 @@ export const ProductDetailPage = () => {
   const product = products?.find(
     (product) => product.id.toString() === id?.toString()
   );
-  console.log("id : ", id);
-  console.log("product : ", product);
 
   useEffect(() => {
     if (!color) {
