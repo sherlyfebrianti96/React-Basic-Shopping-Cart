@@ -1,4 +1,4 @@
-import { Preview } from "@mui/icons-material";
+import { Info, Preview } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from "react-router-dom";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { Product } from "../../interface/Product";
 import { ProductOptions } from "./Options";
@@ -19,24 +20,31 @@ export interface ProductContainerProps {
 }
 
 const useCardStyles = makeStyles({
-	root: {
-		boxShadow: '0px 2px 3px -1px rgb(0 0 0 / 20%), 0px 1px 3px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
-	},
+  root: {
+    boxShadow:
+      "0px 2px 3px -1px rgb(0 0 0 / 20%), 0px 1px 3px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+  },
 });
 
 const useContainerStyles = makeStyles({
-	title: {
-		'&:hover': {
-      textDecoration: 'underline',
+  title: {
+    "&:hover": {
+      textDecoration: "underline",
     },
-    cursor: 'pointer',
-	},
+    cursor: "pointer",
+  },
 });
 
 export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
   ({ item, ...props }) => {
     const cardStyle = useCardStyles();
     const containerStyles = useContainerStyles();
+
+    const navigate = useNavigate();
+
+    const onClickDetail = () => {
+      navigate(`/products/${item.id}/${item.options[0].color.toString()}`);
+    };
 
     const options = item.options.map((option) => {
       if (typeof option.color === "object") {
@@ -63,10 +71,10 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
     };
 
     const title = (
-      <div className={containerStyles.title}>
+      <div className={containerStyles.title} onClick={onClickDetail}>
         {item.name}
       </div>
-    )
+    );
 
     return (
       <Card classes={cardStyle}>
@@ -99,7 +107,9 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
           </Grid>
         </CardContent>
         <CardActions disableSpacing>
-          <Button startIcon={<Preview />}>Product Detail</Button>
+          <Button startIcon={<Preview />} onClick={onClickDetail}>
+            Product Detail
+          </Button>
         </CardActions>
       </Card>
     );

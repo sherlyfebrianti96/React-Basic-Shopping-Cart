@@ -6,8 +6,6 @@ import { MainLayout } from "../layout/Main";
 export const ProductsPage = () => {
   const products = useProducts();
 
-  console.log("product : ", products);
-
   return (
     <MainLayout>
       <h1>Products</h1>
