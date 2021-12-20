@@ -82,9 +82,7 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
         <CardContent>
           <Grid container direction="column">
             <Grid item>
-              <Typography variant="body1">
-                NOK <strong>{priceFormat(item.price)}</strong>,- per piece
-              </Typography>
+              NOK <strong>{priceFormat(item.price)}</strong>,- per piece
             </Grid>
             <Grid item>
               <Typography variant="overline">{item.weight} kg</Typography>
@@ -94,14 +92,12 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
             </Grid>
             {!item.available && (
               <Grid item>
-                <Typography variant="body2" sx={{ opacity: 0.5 }}>
-                  <Grid container spacing={1}>
-                    <Grid item>Product is unavailable</Grid>
-                    <Grid item>
-                      <Info fontSize="small" />
-                    </Grid>
+                <Grid container spacing={1} sx={{ opacity: 0.5 }}>
+                  <Grid item>Product is unavailable</Grid>
+                  <Grid item>
+                    <Info fontSize="small" />
                   </Grid>
-                </Typography>
+                </Grid>
               </Grid>
             )}
           </Grid>
