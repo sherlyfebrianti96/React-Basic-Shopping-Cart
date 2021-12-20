@@ -30,4 +30,6 @@ describe("Product > Information", () => {
 	it('should show `item unavailability` when the product is not available');
 	
   it('should redirect to the correct Page using the selected color');
+
+  it('should remove the product from the cart when the Quantity is Zero');
 });
