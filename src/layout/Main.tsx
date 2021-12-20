@@ -1,4 +1,3 @@
-import { ShoppingCart } from "@mui/icons-material";
 import {
   AppBar,
   Container,
@@ -7,6 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ReactElement } from "react";
+import { PurchaseCartBadge } from "../components/Purchase/CartBadge";
 
 export interface MainLayoutProps {
   children?: ReactElement | Array<ReactElement>;
@@ -30,7 +30,7 @@ export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
             // onClick={handleMenu}
             color="inherit"
           >
-            <ShoppingCart />
+            <PurchaseCartBadge />
           </IconButton>
         </Toolbar>
       </AppBar>

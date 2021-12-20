@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { PurchaseItem } from "../interface/PurchaseItem";
 
 const PURCHASE_ID = "purchase";
 
 export const usePurchase = () => {
+  const [purchaseItems, setPurchaseItems] = useState<Array<PurchaseItem>>([]);
+
   const add = (item: PurchaseItem) => {
     const purchaseList: Array<PurchaseItem> = getAll();
 
@@ -25,6 +28,7 @@ export const usePurchase = () => {
     }
 
     sessionStorage.setItem(PURCHASE_ID, JSON.stringify(purchaseList));
+    setPurchaseItems(purchaseList);
   };
 
   const getAll = (): Array<PurchaseItem> => {
@@ -36,6 +40,7 @@ export const usePurchase = () => {
   };
 
   return {
+    purchaseItems,
     add,
     getAll,
   };
