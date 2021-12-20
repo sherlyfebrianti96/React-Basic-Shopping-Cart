@@ -32,6 +32,7 @@ export const usePurchase = () => {
 
     sessionStorage.setItem(PURCHASE_ID, JSON.stringify(purchaseList));
     setPurchaseItems(purchaseList);
+    window.location.reload();
   };
 
   const getAll = (): Array<PurchaseItem> => {

@@ -22,15 +22,9 @@ export const PurchaseCartBadge: React.FunctionComponent<PurchaseCartBadgeProps> 
 
     const purchase = usePurchase();
 
-		const purchaseList = useRef<Array<PurchaseItem>>();
-
-		useEffect(() => {
-			purchaseList.current = purchase.getAll();
-		}, [purchase]);
-
     return (
       <Badge
-        badgeContent={purchaseList.current?.length}
+        badgeContent={purchase.getAll()?.length}
         color="warning"
         classes={badgeStyles}
       >
