@@ -77,7 +77,7 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
     );
 
     return (
-      <Card classes={cardStyle}>
+      <Card classes={cardStyle} data-testid="product-item">
         <CardHeader title={title} subheader={item.brand} />
         <CardContent>
           <Grid container direction="column">
