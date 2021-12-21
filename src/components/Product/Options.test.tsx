@@ -16,5 +16,5 @@ describe("Product > Options", () => {
     expect(view).toBeTruthy();
   });
 
-	it('should show the Options based on the given color');
+	// it('should show the Options based on the given color');
 });

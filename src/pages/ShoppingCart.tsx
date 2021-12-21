@@ -14,7 +14,7 @@ import { MainLayout } from "../layout/Main";
 import { usePurchase } from "../hooks/usePurchase";
 import { Product } from "../interface/Product";
 import { Theme } from "@material-ui/core/styles";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useNavigationStyles = makeStyles((theme: Theme) => ({
   root: {

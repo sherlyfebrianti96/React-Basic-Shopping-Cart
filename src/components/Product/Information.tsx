@@ -21,7 +21,7 @@ import { Product } from "../../interface/Product";
 import { ProductOption } from "../../interface/ProductOption";
 import { PurchaseItem } from "../../interface/PurchaseItem";
 import { ProductOptions } from "./Options";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 export interface ProductInformationProps {
   item: Product;

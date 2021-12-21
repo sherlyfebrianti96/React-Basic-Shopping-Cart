@@ -1,5 +1,8 @@
 import { render } from "@testing-library/react";
 import { ProductsPage } from "./Products";
+import { useNavigate } from "react-router-dom";
+
+jest.mock('react-router-dom');
 
 describe("Pages > Products", () => {
   it("should load the component", () => {
@@ -7,5 +10,5 @@ describe("Pages > Products", () => {
     expect(view).toBeTruthy();
   });
 
-	it('should show all Product List and its availability');
+	// it('should show all Product List and its availability');
 });

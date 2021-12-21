@@ -3,9 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createTheme, MuiThemeProvider } from "@material-ui/core";
+import {
+  MuiThemeProvider,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+} from "@material-ui/core";
 
-const theme = createTheme();
+const theme = createMuiTheme();
 
 ReactDOM.render(
   <React.StrictMode>

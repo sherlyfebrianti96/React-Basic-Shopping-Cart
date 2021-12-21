@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { Product } from "../../interface/Product";
 import { ProductOptions } from "./Options";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 export interface ProductContainerProps {
   item: Product;

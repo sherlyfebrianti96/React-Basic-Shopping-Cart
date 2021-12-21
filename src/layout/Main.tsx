@@ -42,7 +42,7 @@ export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
       </AppBar>
       {/* Shadow Toolbar */}
       <Toolbar />
-      <Container style={{ marginBottom: 8 }}>{props.children || <></>}</Container>
+      <Container>{props.children || <></>}</Container>
     </>
   );
 };

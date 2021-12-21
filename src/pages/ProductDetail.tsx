@@ -5,7 +5,7 @@ import { ProductInformation } from "../components/Product/Information";
 import { useProducts } from "../hooks/useProducts";
 import { MainLayout } from "../layout/Main";
 import { useEffect } from "react";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useNavigationStyles = makeStyles((theme: Theme) => ({
   root: {

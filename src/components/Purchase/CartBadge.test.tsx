@@ -9,5 +9,5 @@ describe("Purchase > Cart Badge", () => {
     expect(view).toBeTruthy();
   });
 
-	it('should get Shopping Cart Badges based on number of product');
+	// it('should get Shopping Cart Badges based on number of product');
 });
