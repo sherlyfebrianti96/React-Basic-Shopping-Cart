@@ -4,13 +4,12 @@ import {
   IconButton,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { ReactElement } from "react";
+} from "@material-ui/core";
 import { PurchaseCartBadge } from "../components/Purchase/CartBadge";
 import { useNavigate } from "react-router-dom";
 
 export interface MainLayoutProps {
-  children?: ReactElement | Array<ReactElement>;
+  children?: JSX.Element|JSX.Element[];
 }
 
 export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
@@ -19,18 +18,18 @@ export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
   const navigate = useNavigate();
 
   const onClickShoppingCart = () => {
-		navigate('/shopping-cart');
+    navigate("/shopping-cart");
   };
 
   return (
     <>
       <AppBar>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
             Basic Shopping Brand
           </Typography>
           <IconButton
-            size="large"
+            size="medium"
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
@@ -43,7 +42,7 @@ export const MainLayout: React.FunctionComponent<MainLayoutProps> = ({
       </AppBar>
       {/* Shadow Toolbar */}
       <Toolbar />
-      <Container sx={{ marginBottom: 8 }}>{props.children}</Container>
+      <Container style={{ marginBottom: 8 }}>{props.children || <></>}</Container>
     </>
   );
 };

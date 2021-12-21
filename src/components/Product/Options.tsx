@@ -1,5 +1,5 @@
-import { FiberManualRecord } from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
+import { FiberManualRecord } from "@material-ui/icons";
+import { Tooltip } from "@material-ui/core";
 import { OptionsColor } from "../../enum/OptionsColor";
 
 export interface ProductOptionsProps {
@@ -13,7 +13,7 @@ export const ProductOptions: React.FunctionComponent<ProductOptionsProps> = ({
   const optionColor: string = OptionsColor[color as keyof typeof OptionsColor];
   return (
     <Tooltip title={color.toUpperCase()}>
-      <FiberManualRecord fontSize="small" sx={{ color: optionColor }} />
+      <FiberManualRecord fontSize="small" style={{ color: optionColor }} />
     </Tooltip>
   );
 };

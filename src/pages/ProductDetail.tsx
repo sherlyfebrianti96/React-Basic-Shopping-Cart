@@ -1,15 +1,16 @@
-import { ArrowBack } from "@mui/icons-material";
-import { Button, Theme, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { ArrowBack } from "@material-ui/icons";
+import { ButtonBase, Link, Theme, Typography } from "@material-ui/core";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductInformation } from "../components/Product/Information";
 import { useProducts } from "../hooks/useProducts";
 import { MainLayout } from "../layout/Main";
 import { useEffect } from "react";
+import { makeStyles } from "@material-ui/styles";
 
 const useNavigationStyles = makeStyles((theme: Theme) => ({
   root: {
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
 }));
 
@@ -39,9 +40,11 @@ export const ProductDetailPage = () => {
   return (
     <MainLayout>
       <Typography classes={navigationStyles}>
-        <Button startIcon={<ArrowBack />} onClick={onClickFindAnotherProduct}>
-          Find another products
-        </Button>
+        <Link>
+          <ButtonBase onClick={onClickFindAnotherProduct}>
+            <ArrowBack /> Find another products
+          </ButtonBase>
+        </Link>
       </Typography>
       {product ? (
         <ProductInformation item={product} color={color as string} />

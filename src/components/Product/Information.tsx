@@ -1,27 +1,18 @@
-import {
-  Add,
-  AddShoppingCart,
-  Delete,
-  Info,
-  Remove,
-} from "@mui/icons-material";
+import { Add, AddShoppingCart, Delete, Info, Remove } from "@material-ui/icons";
 import {
   Button,
   FormControl,
   Grid,
   IconButton,
-  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   TextField,
   Theme,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
+} from "@material-ui/core";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { ProductOptionType } from "../../enum/ProductOptionType";
@@ -30,10 +21,12 @@ import { Product } from "../../interface/Product";
 import { ProductOption } from "../../interface/ProductOption";
 import { PurchaseItem } from "../../interface/PurchaseItem";
 import { ProductOptions } from "./Options";
+import { makeStyles } from "@material-ui/styles";
 
 export interface ProductInformationProps {
   item: Product;
   color: string;
+  disableColorSelection?: boolean;
 }
 
 const useSectionStyles = makeStyles((theme: Theme) => ({
@@ -44,7 +37,7 @@ const useSectionStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const ProductInformation: React.FunctionComponent<ProductInformationProps> =
-  ({ item, color, ...props }) => {
+  ({ item, color, disableColorSelection = false, ...props }) => {
     const sectionStyles = useSectionStyles();
 
     const [activeOption, setActiveOption] = useState<ProductOption>(
@@ -83,7 +76,12 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
       }
     }, [item.id, item.options, navigate, color]);
 
-    const onColorChange = (evt: SelectChangeEvent) => {
+    const onColorChange = (
+      evt: ChangeEvent<{
+        name?: string | undefined;
+        value: unknown;
+      }>
+    ) => {
       const color = evt.target.value;
       navigate(`/products/${item.id}/${color}`);
     };
@@ -239,13 +237,14 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
 
         <Grid container classes={sectionStyles}>
           <Grid item>
-            <FormControl>
+            <FormControl variant="outlined">
               <InputLabel id="select-color-label">Color</InputLabel>
               <Select
                 labelId="select-color-label"
                 id="select-color"
                 value={color}
                 label="Color"
+                disabled={disableColorSelection}
                 onChange={onColorChange}
               >
                 {item.options.map((option) => (
@@ -264,48 +263,45 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
           <>
             <Grid container classes={sectionStyles}>
               <Grid item>
-                <TextField
-                  id="input-quantity"
-                  label="Quantity"
-                  value={productInPurchase.quantity}
-                  onChange={onChangeQuantity}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <IconButton
-                          size="large"
-                          aria-label="Reduce Purchase Quantity"
-                          aria-controls="quantity-reduce"
-                          color="inherit"
-                          onClick={onDecreaseQuantity}
-                        >
-                          <Remove />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          size="large"
-                          aria-label="Increase Purchase Quantity"
-                          aria-controls="quantity-increase"
-                          color="inherit"
-                          onClick={onIncreaseQuantity}
-                        >
-                          <Add />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                />
+                <Grid container spacing={1} alignItems="flex-end">
+                  <Grid item>
+                    <IconButton
+                      size="small"
+                      aria-label="Reduce Purchase Quantity"
+                      aria-controls="quantity-reduce"
+                      color="inherit"
+                      onClick={onDecreaseQuantity}
+                    >
+                      <Remove />
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      id="input-quantity"
+                      label="Quantity"
+                      value={productInPurchase.quantity}
+                      onChange={onChangeQuantity}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      size="small"
+                      aria-label="Increase Purchase Quantity"
+                      aria-controls="quantity-increase"
+                      color="inherit"
+                      onClick={onIncreaseQuantity}
+                    >
+                      <Add />
+                    </IconButton>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Grid container classes={sectionStyles}>
               <Grid item>
                 <Button
                   variant="outlined"
-                  color="warning"
+                  color="secondary"
                   onClick={onRemoveFromCart}
                 >
                   <Delete />
@@ -320,6 +316,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
               <Grid item>
                 <Button
                   variant="contained"
+                  color="primary"
                   size="large"
                   startIcon={<AddShoppingCart />}
                   onClick={onAddToCart}
@@ -332,7 +329,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
                 <Button
                   variant="contained"
                   size="large"
-                  color="warning"
+                  color="secondary"
                   endIcon={<Info />}
                 >
                   Product is unavailable

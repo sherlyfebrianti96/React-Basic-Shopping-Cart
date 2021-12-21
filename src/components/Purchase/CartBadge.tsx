@@ -1,7 +1,7 @@
-import { ShoppingCart } from "@mui/icons-material";
-import { Badge, Theme, Toolbar } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { ShoppingCart } from "@material-ui/icons";
+import { Badge, Theme, Toolbar } from "@material-ui/core";
 import { usePurchase } from "../../hooks/usePurchase";
+import { makeStyles } from "@material-ui/styles";
 
 export interface PurchaseCartBadgeProps {}
 
@@ -22,7 +22,7 @@ export const PurchaseCartBadge: React.FunctionComponent<PurchaseCartBadgeProps> 
     return (
       <Badge
         badgeContent={purchase.getAll()?.length}
-        color="warning"
+        color="secondary"
         classes={badgeStyles}
       >
         <ShoppingCart />

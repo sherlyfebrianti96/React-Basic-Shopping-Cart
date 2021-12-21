@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid } from "@material-ui/core";
 import { ProductContainer } from "../components/Product/Container";
 import { useProducts } from "../hooks/useProducts";
 import { MainLayout } from "../layout/Main";

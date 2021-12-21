@@ -1,4 +1,4 @@
-import { Info, Preview } from "@mui/icons-material";
+import { Info, Visibility } from "@material-ui/icons";
 import {
   Button,
   Card,
@@ -8,12 +8,12 @@ import {
   Grid,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
+} from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { OptionsColor } from "../../enum/OptionsColor";
 import { Product } from "../../interface/Product";
 import { ProductOptions } from "./Options";
+import { makeStyles } from "@material-ui/styles";
 
 export interface ProductContainerProps {
   item: Product;
@@ -92,7 +92,7 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
             </Grid>
             {!item.available && (
               <Grid item>
-                <Grid container spacing={1} sx={{ opacity: 0.5 }}>
+                <Grid container spacing={1} style={{ opacity: 0.5 }}>
                   <Grid item>Product is unavailable</Grid>
                   <Grid item>
                     <Info fontSize="small" />
@@ -103,7 +103,7 @@ export const ProductContainer: React.FunctionComponent<ProductContainerProps> =
           </Grid>
         </CardContent>
         <CardActions disableSpacing>
-          <Button startIcon={<Preview />} onClick={onClickDetail}>
+          <Button startIcon={<Visibility />} onClick={onClickDetail}>
             Product Detail
           </Button>
         </CardActions>
