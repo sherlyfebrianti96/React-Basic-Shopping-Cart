@@ -313,7 +313,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
         ) : (
           <Grid container classes={sectionStyles}>
             {item.available ? (
-              <Grid item>
+              <Grid item data-testid="product-detail-add-to-cart-button">
                 <Button
                   variant="contained"
                   color="primary"
@@ -325,7 +325,7 @@ export const ProductInformation: React.FunctionComponent<ProductInformationProps
                 </Button>
               </Grid>
             ) : (
-              <Grid item>
+              <Grid item data-testid="product-detail-unavailable-button">
                 <Button
                   variant="contained"
                   size="large"

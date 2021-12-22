@@ -49,7 +49,7 @@ export const ProductDetailPage = () => {
       {product ? (
         <ProductInformation item={product} color={color as string} />
       ) : (
-        <h3>Product not found.</h3>
+        <h3 data-testid="product-not-found-message">Product not found.</h3>
       )}
     </MainLayout>
   );
